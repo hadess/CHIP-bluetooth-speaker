@@ -19,6 +19,9 @@ apt-get update
 apt-get upgrade -y
 apt-get install -y bluez-tools pulseaudio-module-bluetooth pulseaudio
 
+# See git log for details
+cp -f bt-agent.bin /usr/bin/bt-agent
+
 # Setup default hostname (and Bluetooth adapter name)
 hostnamectl set-hostname "$NAME"
 # FIXME: When the systemd version supports it
