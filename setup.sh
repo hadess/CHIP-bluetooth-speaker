@@ -56,6 +56,7 @@ Group=chip
 Type=simple
 PrivateTmp=true
 ExecStart=/usr/bin/bt-agent -c NoInputNoOutput -p /home/chip/.config/bluetooth-default-pin
+Restart=on-failure
 EOF
 
 # http://bluetooth-pentest.narod.ru/software/bluetooth_class_of_device-service_generator.html
