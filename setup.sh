@@ -40,7 +40,7 @@ mkdir -p /home/chip/.config/
 cat <<EOF > /home/chip/.config/bluetooth-default-pin
 * $DEFAULT_PIN
 EOF
-chown -R chip:chip /home/chip/.config/bluetooth-default-pin
+chown -R chip:chip /home/chip/.config/
 chmod 0600 /home/chip/.config/bluetooth-default-pin
 
 cat <<EOF > /etc/systemd/system/bt-agent.service
