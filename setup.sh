@@ -60,10 +60,10 @@ Restart=on-failure
 EOF
 
 # http://bluetooth-pentest.narod.ru/software/bluetooth_class_of_device-service_generator.html
-# Major Service Class: Audio
+# Major Service Class: Rendering/Audio
 # Major Device Class: Audio/Video
 # Minor Device Class: Loudspeaker/HiFi Audio Device
-sed -i 's|^Class =|Class=0x20043C|; s|^#Class =|Class=0x20043C|' /etc/bluetooth/main.conf
+sed -i 's|^Class =|Class=0x24043C|; s|^#Class =|Class=0x24043C|' /etc/bluetooth/main.conf
 
 systemctl restart bluetooth
 
