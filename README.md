@@ -11,6 +11,13 @@ Don't forget to change the root and chip user passwords after installation.
 Find more information about the project this was built for, Blutella, at:
 http://www.hadess.net/2016/05/blutella-bluetooth-speaker-receiver.html
 
+SOURCES
+-------
+
+The bt-agent.bin binary is a compiled version of my branch of the [bluez-tools](https://github.com/hadess/bluez-tools),
+which contains many fixes for crashers experienced during the development of
+this script.
+
 CONTRIBUTING
 ------------
 I'd be happy taking in patches to support other similar Linux-powered boards,
