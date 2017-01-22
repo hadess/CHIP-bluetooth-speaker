@@ -14,7 +14,7 @@ http://www.hadess.net/2016/05/blutella-bluetooth-speaker-receiver.html
 SOURCES
 -------
 
-The bt-agent.bin binary is a compiled version of my branch of the [bluez-tools](https://github.com/hadess/bluez-tools),
+The bt-agent.bin binary is a compiled version of [bluez-tools](https://github.com/khvzak/bluez-tools),
 which contains many fixes for crashers experienced during the development of
 this script.
 
