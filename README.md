@@ -20,6 +20,16 @@ The bt-agent.bin binary is a compiled version of [bluez-tools](https://github.co
 which contains many fixes for crashers experienced during the development of
 this script.
 
+REPORTING PROBLEMS
+------------------
+
+Problems can be reported in the usual manner in the project's issues section:
+https://github.com/hadess/CHIP-bluetooth-speaker/issues
+
+Note that the script is usually only tested on a single piece of hardware by
+the author, but that the script should work on any recent update to the 4.3
+and 4.4 kernel releases from NextThingCo.
+
 CONTRIBUTING
 ------------
 I'd be happy taking in patches to support other similar Linux-powered boards,
