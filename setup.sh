@@ -19,6 +19,12 @@ set -e
 # Debug
 # set -x
 
+# More early checks
+if ! grep -q CONFIG_NAMESPACES /boot/config-$(uname -r) ; then
+   echo "The kernel used doesn't seem to support namespaces, make sure the CHIP has been upgraded" 1>&2
+   exit 1
+fi
+
 # Update, install the necessary plugins
 
 apt-get update
