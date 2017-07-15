@@ -29,7 +29,7 @@ fi
 
 apt-get update
 apt-get upgrade -y
-apt-get install -y bluez-tools pulseaudio-module-bluetooth pulseaudio
+apt-get install -y bluez-tools pulseaudio-module-bluetooth pulseaudio libnss-myhostname
 
 # See git log for details
 cp -f bt-agent.bin /usr/bin/bt-agent
