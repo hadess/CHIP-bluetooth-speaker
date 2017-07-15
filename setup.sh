@@ -60,6 +60,11 @@ if [ $DELETE_FW_ENV == "1" ] ; then
    rm -f /etc/fw_env.config
 fi
 
+# Disable the blinking light
+if [ -f /sys/class/leds/chip\:white\:status/trigger ] ; then
+   echo "@reboot root echo none | tee /sys/class/leds/chip\:white\:status/trigger > /dev/null" >> /etc/cron.d/disable-heartbeat-led
+fi
+
 # Setup bluez
 cat <<EOF > /etc/bluetooth/audio.conf
 [General]
