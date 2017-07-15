@@ -7,6 +7,8 @@ NAME="My CHIP speaker" DEFAULT_PIN=1234 ./setup.sh
 ```
 
 Don't forget to change the root and chip user passwords after installation.
+The video output will be disabled to avoid interferences and noise coming out
+of the speakers with some connectors.
 
 Find more information about the project this was built for, Blutella, at:
 http://www.hadess.net/2016/05/blutella-bluetooth-speaker-receiver.html

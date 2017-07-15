@@ -40,6 +40,26 @@ hostnamectl set-chassis embedded 2>&1 > /dev/null || :
 HOST_NAME=`hostname`
 sed -i "s|chip$|$HOST_NAME|" /etc/hosts
 
+# Setup "no video" video mode
+# See https://bbs.nextthing.co/t/u-boot-2016-01-00088-g99c771f/11642/2
+DELETE_FW_ENV=0
+if [ ! -f /etc/fw_env.config ] ; then
+   echo "/dev/mtdblock3 0 0x400000 0x4000" > /etc/fw_env.config
+   DELETE_FW_ENV=1
+fi
+# Disable video in U-Boot
+# FIXME the logo still appears
+# fw_setenv video-mode sunxi:720x576-24@60,monitor=none
+# Disable video in Linux
+BOOTARGS=$(fw_printenv | grep "^bootargs=" | sed 's,bootargs=,,')
+if ! echo $BOOTARGS | grep -q video=none ; then
+   fw_setenv bootargs "$BOOTARGS video=none"
+fi
+# Delete config file if we created it
+if [ $DELETE_FW_ENV == "1" ] ; then
+   rm -f /etc/fw_env.config
+fi
+
 # Setup bluez
 cat <<EOF > /etc/bluetooth/audio.conf
 [General]
