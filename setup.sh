@@ -29,7 +29,7 @@ fi
 
 apt-get update
 apt-get upgrade -y
-apt-get install -y bluez-tools pulseaudio-module-bluetooth pulseaudio libnss-myhostname
+apt-get install -y bluez-tools pulseaudio-module-bluetooth pulseaudio libnss-myhostname crudini
 
 # See git log for details
 cp -f bt-agent.bin /usr/bin/bt-agent
@@ -101,11 +101,12 @@ ExecStart=/usr/bin/bt-agent -c NoInputNoOutput -p /home/chip/.config/bluetooth-d
 Restart=on-failure
 EOF
 
+sed -i 's|^#Class =|Class=|' /etc/bluetooth/main.conf
 # http://bluetooth-pentest.narod.ru/software/bluetooth_class_of_device-service_generator.html
 # Major Service Class: Rendering/Audio
 # Major Device Class: Audio/Video
 # Minor Device Class: Loudspeaker/HiFi Audio Device
-sed -i 's|^Class =|Class=0x24043C|; s|^#Class =|Class=0x24043C|' /etc/bluetooth/main.conf
+crudini --set /etc/bluetooth/main.conf General Class 0x24043C
 
 systemctl restart bluetooth
 systemctl enable bt-agent.service
