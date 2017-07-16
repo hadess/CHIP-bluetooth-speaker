@@ -82,6 +82,7 @@ chmod 0600 /home/chip/.config/bluetooth-default-pin
 cat <<EOF > /etc/systemd/system/bt-agent.service
 [Unit]
 Description=Bluetooth pairing agent
+After=bt_rtk_hciattach@ttyS1.service
 
 [Install]
 WantedBy=multi-user.target
@@ -91,6 +92,11 @@ User=chip
 Group=chip
 Type=simple
 PrivateTmp=true
+ExecStartPre=/usr/bin/bt-adapter --set Powered 1
+ExecStartPre=/usr/bin/bt-adapter --set DiscoverableTimeout 0
+ExecStartPre=/usr/bin/bt-adapter --set Discoverable 1
+ExecStartPre=/usr/bin/bt-adapter --set PairableTimeout 0
+ExecStartPre=/usr/bin/bt-adapter --set Pairable 1
 ExecStart=/usr/bin/bt-agent -c NoInputNoOutput -p /home/chip/.config/bluetooth-default-pin
 Restart=on-failure
 EOF
@@ -102,13 +108,6 @@ EOF
 sed -i 's|^Class =|Class=0x24043C|; s|^#Class =|Class=0x24043C|' /etc/bluetooth/main.conf
 
 systemctl restart bluetooth
-
-bt-adapter --set Powered 1
-bt-adapter --set DiscoverableTimeout 0
-bt-adapter --set Discoverable 1
-bt-adapter --set PairableTimeout 0
-bt-adapter --set Pairable 1
-
 systemctl enable bt-agent.service
 systemctl restart bt-agent.service
 
