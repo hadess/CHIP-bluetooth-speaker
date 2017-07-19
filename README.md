@@ -26,10 +26,9 @@ REPORTING PROBLEMS
 Problems can be reported in the usual manner in the project's issues section:
 https://github.com/hadess/CHIP-bluetooth-speaker/issues
 
-I will not be working on this script any more, as it seems that the hardware
-is [not resilient enough to not spit static and noise through the audio output
-when Bluetooth is in use](https://bbs.nextthing.co/t/basic-guide-to-turning-chip-into-a-bluetooth-audio-receiver-audio-sink/2187/95?u=hadess).
-Which is a pretty big deal for a Bluetooth speaker.
+Note that most interferences, plops, and similar [can be attributed to the
+power supply](https://bbs.nextthing.co/t/basic-guide-to-turning-chip-into-a-bluetooth-audio-receiver-audio-sink/2187/96?u=hadess).
+Try with a powerful tablet grade 2A power supply before blaming the software.
 
 Note that the script is usually only tested on a single piece of hardware by
 the author, but that the script should work on any recent update to the 4.3
