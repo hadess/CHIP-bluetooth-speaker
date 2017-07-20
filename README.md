@@ -20,15 +20,24 @@ The bt-agent.bin binary is a compiled version of [bluez-tools](https://github.co
 which contains many fixes for crashers experienced during the development of
 this script.
 
+HARDWARE
+--------
+
+For the power supply to the CHIP, I'd recommend either using a powerful
+USB charger, or a large high-quality battery coupled with USB power from
+another appliance (I connect my speaker to my amp's MP3 player port).
+If you don't supply enough or unstable power, you will likely [get
+interferences, plops, and similar](https://bbs.nextthing.co/t/basic-guide-to-turning-chip-into-a-bluetooth-audio-receiver-audio-sink/2187/96?u=hadess).
+
+If you're going to use a battery with an intermittent power supply (USB power
+is cut when I turn off my amp), you can use [this script](https://github.com/stadar/chip_batt_autoshutdown)
+to turn off the CHIP when power is cut.
+
 REPORTING PROBLEMS
 ------------------
 
 Problems can be reported in the usual manner in the project's issues section:
 https://github.com/hadess/CHIP-bluetooth-speaker/issues
-
-Note that most interferences, plops, and similar [can be attributed to the
-power supply](https://bbs.nextthing.co/t/basic-guide-to-turning-chip-into-a-bluetooth-audio-receiver-audio-sink/2187/96?u=hadess).
-Try with a powerful tablet grade 2A power supply before blaming the software.
 
 Note that the script is usually only tested on a single piece of hardware by
 the author, but that the script should work on any recent update to the 4.3
