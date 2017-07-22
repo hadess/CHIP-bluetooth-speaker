@@ -37,8 +37,6 @@ cp -f bt-agent.bin /usr/bin/bt-agent
 # Setup default hostname (and Bluetooth adapter name)
 hostnamectl set-hostname "$NAME"
 hostnamectl set-chassis embedded 2>&1 > /dev/null || :
-HOST_NAME=`hostname`
-sed -i "s|chip$|$HOST_NAME|" /etc/hosts
 
 # Setup "no video" video mode
 # See https://bbs.nextthing.co/t/u-boot-2016-01-00088-g99c771f/11642/2
