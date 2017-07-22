@@ -1,0 +1,14 @@
+[Unit]
+Description=PulseAudio Daemon
+After=pulseaudio.service
+After=bt_rtk_hciattach@ttyS1.service
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+User=chip
+Group=chip
+Type=simple
+PrivateTmp=true
+ExecStart=/usr/bin/bluetooth-volume-handler.py

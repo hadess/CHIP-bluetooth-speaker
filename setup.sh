@@ -132,3 +132,10 @@ EOF
 
 systemctl enable pulseaudio.service
 systemctl restart pulseaudio.service
+
+# Volume control
+install -m0755 bluetooth-volume-handler.py /usr/bin/
+install -m0644 bluetooth-volume-handler.service /etc/systemd/system/
+
+systemctl enable bluetooth-volume-handler.service
+systemctl start bluetooth-volume-handler.service
