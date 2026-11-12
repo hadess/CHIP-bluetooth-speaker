@@ -29,7 +29,17 @@ fi
 
 apt-get update
 apt-get upgrade -y
-apt-get install -y bluez-tools pulseaudio-module-bluetooth pulseaudio libnss-myhostname crudini
+# python-gi, pulseaudio-utils (paplay) and sound-theme-freedesktop are all used by
+# bluetooth-volume-handler.py, so install them explicitly rather than relying on
+# another package's Recommends pulling them in.
+apt-get install -y bluez-tools pulseaudio-module-bluetooth pulseaudio libnss-myhostname crudini \
+	python-gi pulseaudio-utils sound-theme-freedesktop
+
+# pulseaudio Recommends pulseaudio-module-x11, which is useless on a headless box and
+# makes PulseAudio try to reach an X server ("xcb_connection_has_error() returned true").
+# Don't use --no-install-recommends above: pulseaudio also Recommends rtkit, which the
+# --realtime option in our pulseaudio.service needs.
+apt-get purge -y pulseaudio-module-x11
 
 # See git log for details
 cp -f bt-agent.bin /usr/bin/bt-agent
@@ -111,6 +121,16 @@ systemctl enable bt-agent.service
 systemctl restart bt-agent.service
 
 # Setup pulseaudio
+# bluetooth-volume-handler.py runs paplay on connect/disconnect. Without this, libpulse
+# autospawns a second PulseAudio as the chip user, which fights the one systemd manages
+# below: the pair repeatedly register and unregister the A2DP endpoints, tearing down the
+# sink every time a phone connects.
+mkdir -p /home/chip/.config/pulse
+cat <<EOF > /home/chip/.config/pulse/client.conf
+autospawn = no
+EOF
+chown -R chip:chip /home/chip/.config/pulse
+
 cat <<EOF > /etc/systemd/system/pulseaudio.service
 [Unit]
 Description=PulseAudio Daemon
