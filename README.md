@@ -13,6 +13,32 @@ of the speakers with some connectors.
 Find more information about the project this was built for, Blutella, at:
 http://www.hadess.net/2016/05/blutella-bluetooth-speaker-receiver.html
 
+FLASHING, NOW THAT NEXT THING CO. IS GONE
+-----------------------------------------
+
+`flash.getchip.com` and the NTC apt repository are both dead. The images survive
+on the Internet Archive as the [C.H.I.P. Flash Collection](https://archive.org/details/C.h.i.p.FlashCollection):
+`stable-server-b149.zip` is the headless Debian 8 image this script is written
+for, and the same item has `CHIP-tools.zip` for flashing it over USB FEL.
+
+Debian 8 has also moved to the archive, so `apt-get` has to be repointed before
+`setup.sh` will get past its first command. Replace the contents of
+`/etc/apt/sources.list` with:
+
+```
+deb [trusted=yes] http://archive.debian.org/debian/ jessie main contrib non-free
+deb [trusted=yes] http://archive.debian.org/debian-security/ jessie/updates main contrib non-free
+```
+
+and put `Acquire::Check-Valid-Until "false";` in `/etc/apt/apt.conf.d/99archive`.
+The `[trusted=yes]` is needed because the jessie signing keys have expired; drop
+the old `opensource.nextthing.co` line entirely. Note that `apt-get upgrade` has
+nothing left to usefully do from here, and is slow on NAND — consider skipping it.
+
+No monitor or keyboard is required for any of this. A CHIP running the server
+image comes up as a USB CDC gadget, giving you both a serial console on the
+host's `/dev/ttyACM0` and a USB ethernet interface you can ssh over.
+
 SOURCES
 -------
 
@@ -32,6 +58,14 @@ interferences, plops, and similar](https://bbs.nextthing.co/t/basic-guide-to-tur
 If you're going to use a battery with an intermittent power supply (USB power
 is cut when I turn off my amp), you can use [this script](https://github.com/stadar/chip_batt_autoshutdown)
 to turn off the CHIP when power is cut.
+
+One failure worth naming, because it looks like a crash and isn't: if the CHIP
+powers itself off roughly 40 seconds into boot, with every LED going dark, that
+is the AXP209 capping VBUS input at 500 mA because it detected a USB host rather
+than a charger — the WiFi/Bluetooth firmware load then pushes it over the limit.
+It happens on a computer's port or a powered hub, but not on a plain wall charger
+(which shorts the data lines and so is detected as unlimited). Flashing with
+CHIP-tools' `-n` flag writes a `bootcmd` that lifts the limit at every boot.
 
 REPORTING PROBLEMS
 ------------------
