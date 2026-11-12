@@ -44,12 +44,11 @@ def media_property_changed_cb(conn, sender_name, path, interface, signal, parame
         elif connected == True:
             cmd = play_sound('connect')
 
-def shutdown(signum, frame):
+def shutdown():
 	mainloop.quit()
+	return False
 
 if __name__ == "__main__":
-    # shut down on a TERM signal
-    signal.signal(signal.SIGTERM, shutdown)
 
     # Get the system bus
     try:
@@ -69,6 +68,11 @@ if __name__ == "__main__":
 
     try:
         mainloop = GLib.MainLoop()
+        # Must go through GLib: a handler installed with signal.signal() only
+        # runs between Python bytecodes, and this process spends its life
+        # blocked inside the GLib main loop, so SIGTERM would never be acted
+        # on and systemd would wait out its full stop timeout on shutdown.
+        GLib.unix_signal_add(GLib.PRIORITY_DEFAULT, signal.SIGTERM, shutdown)
         mainloop.run()
     except KeyboardInterrupt:
         pass
