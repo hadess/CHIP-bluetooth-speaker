@@ -97,6 +97,10 @@ ExecStartPre=/usr/bin/bt-adapter --set PairableTimeout 0
 ExecStartPre=/usr/bin/bt-adapter --set Pairable 1
 ExecStart=/usr/bin/bt-agent -c NoInputNoOutput -p /home/chip/.config/bluetooth-default-pin
 Restart=on-failure
+# bt-agent ignores SIGTERM but exits promptly on SIGINT. Without this, systemd
+# waits out DefaultTimeoutStopSec (90s by default) on every shutdown.
+KillSignal=SIGINT
+TimeoutStopSec=10
 EOF
 
 sed -i 's|^#Class =|Class=|' /etc/bluetooth/main.conf
